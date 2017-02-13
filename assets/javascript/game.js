@@ -40,11 +40,16 @@ for (i = 0; i < wordToGuess.length; i++) {
 	(wordDisplay).push('_ ');
 }
 
+var guessedLetters = [];
+
 document.write('<p id="wordDisplay">'+ wordDisplay +'</p>');
 
 
 //display the number of remaining guesses
-document.write(guessesLeft);
+document.write('<p id="guessesLeft">'+ guessesLeft +'</p>');
+
+//display guessed letters
+document.write('<p id="guessedLetters"> Guessed letters: '+ guessedLetters +'</p>');
 
 
 //check to see if the guess matches any of the letters in the word.
@@ -56,22 +61,39 @@ function checkWord(x) {
 		} else {
 			 correctGuess = false;
 		}
-	//end for loop to chec kfor matches	
+	//end for loop to check for matches	
 	}
 
 //if there is a match, replace the dashes in the word with the guess. if not, decrease the guess count and add the letter to the guess list	
 
 	if (correctGuess) {
-		console.log("You correctly guessed " + x);
+		// console.log("You correctly guessed " + x);
 		for (i = 0; i < wordToGuess.length; i++) {
 			if (x === wordToGuess[i]) {
 				wordDisplay.splice(i, 1, x);
-				console.log(wordDisplay);
+				// console.log(wordDisplay);
 				document.getElementById("wordDisplay").innerHTML = wordDisplay;
 			}
 		}		
 	} else {
-		console.log("You incorrectly guessed " + x);
+//NTS: check for whether it 
+ already guessed
+		for (i = 0; i < guessedLetters.length; i++) {
+			if (x === guessedLetters[i]) {
+				console.log("You already guessed " + x);
+				break;
+			} else {
+		//this part working fine
+				guessesLeft = guessesLeft -1;
+				document.getElementById("guessesLeft").innerHTML = guessesLeft;
+
+				guessedLetters.push(x);
+
+				document.getElementById("guessedLetters").innerHTML = 'Guessed letters: '+ guessedLetters;
+				console.log("You incorrectly guessed " + x);
+			}
+	}
+// end if/else for correct guess
 	}
 
 
