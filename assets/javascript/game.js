@@ -14,8 +14,6 @@
 // choose another word at random for the player to guess
 
 
-var guessesLeft = 12;
-
 //make word options by making a set of arrays w/each word as [w,o,r,d]
 //then make array full of those arrays, select item at random?
 
@@ -40,19 +38,26 @@ for (i = 0; i < wordToGuess.length; i++) {
 	(wordDisplay).push('_ ');
 }
 
-var guessedLetters = [];
-
 document.write('<p id="wordDisplay">'+ wordDisplay +'</p>');
 
 
+
+var guessesLeft = 12;
+
 //display the number of remaining guesses
 document.write('<p id="guessesLeft">'+ guessesLeft +'</p>');
+
+
+
+//to collect the  incorrect letters guessed by the user
+var guessedLetters = [];
 
 //display guessed letters
 document.write('<p id="guessedLetters"> Guessed letters: '+ guessedLetters +'</p>');
 
 
 //check to see if the guess matches any of the letters in the word.
+//start checkWord
 function checkWord(x) {
 	for (i = 0; i < wordToGuess.length; i++) {
 		if (x === wordToGuess[i]) {
@@ -64,42 +69,45 @@ function checkWord(x) {
 	//end for loop to check for matches	
 	}
 
-//if there is a match, replace the dashes in the word with the guess. if not, decrease the guess count and add the letter to the guess list	
+//if there is a match, replace the dashes in the word with the guess. 
 
 	if (correctGuess) {
 		// console.log("You correctly guessed " + x);
+
 		for (i = 0; i < wordToGuess.length; i++) {
 			if (x === wordToGuess[i]) {
 				wordDisplay.splice(i, 1, x);
 				// console.log(wordDisplay);
 				document.getElementById("wordDisplay").innerHTML = wordDisplay;
 			}
-		}		
+
+		}	
+	//checks to see if the letter has already been guessed
+	} else  if (guessedLetters.includes(x)){
+
+		console.log("you already guessed " + x );
+	// if it is a new incorrect guess, decrease the guess count and add the letter to the guess list
 	} else {
-//NTS: check for whether it 
- already guessed
-		for (i = 0; i < guessedLetters.length; i++) {
-			if (x === guessedLetters[i]) {
-				console.log("You already guessed " + x);
-				break;
-			} else {
-		//this part working fine
-				guessesLeft = guessesLeft -1;
+				guessesLeft = guessesLeft - 1;
 				document.getElementById("guessesLeft").innerHTML = guessesLeft;
+
 
 				guessedLetters.push(x);
 
 				document.getElementById("guessedLetters").innerHTML = 'Guessed letters: '+ guessedLetters;
 				console.log("You incorrectly guessed " + x);
-			}
-	}
+
+				
+
 // end if/else for correct guess
 	}
 
-
-
 // end checkWord 
 }
+
+//check to see if there is a win or a loss
+//a win occurs when there are no more letters to guess (no more underscores)
+//a lose happens when the user has run out of guesses
 
 
 
