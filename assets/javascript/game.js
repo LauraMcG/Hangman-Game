@@ -8,9 +8,9 @@
 //  when player enters a letter check whether it is a match
 //  if it is a match, display it within the word
 //  	if it has already been guessed, take no action
-//  	else take away a remaining guess and list the guessted letter below
+//  	else take away a remaining guess and list the guessed letter below
 
-// when the player wins (all numbers are guessed)
+// when the player wins (all letters are guessed)
 // choose another word at random for the player to guess
 
 
@@ -66,22 +66,26 @@ function checkWord(x) {
 		} else {
 			 correctGuess = false;
 		}
-	//end for loop to check for matches	
+	//end for loop to check for matches	-- maybe try includes()?
 	}
 
-//if there is a match, replace the dashes in the word with the guess. 
-
+	//if there is a match, replace the dashes in the word with the guess. 
 	if (correctGuess) {
-		// console.log("You correctly guessed " + x);
 
 		for (i = 0; i < wordToGuess.length; i++) {
 			if (x === wordToGuess[i]) {
 				wordDisplay.splice(i, 1, x);
-				// console.log(wordDisplay);
 				document.getElementById("wordDisplay").innerHTML = wordDisplay;
 			}
-
 		}	
+		//check to see if there is a win
+
+		if (wordDisplay.includes("_ ")) {
+			console.log("you've got more to guess");
+		} else {
+			console.log("you won!");
+		}
+
 	//checks to see if the letter has already been guessed
 	} else  if (guessedLetters.includes(x)){
 
@@ -97,6 +101,11 @@ function checkWord(x) {
 				document.getElementById("guessedLetters").innerHTML = 'Guessed letters: '+ guessedLetters;
 				console.log("You incorrectly guessed " + x);
 
+				if (guessesLeft === 0) {
+					console.log("you lost!");
+				// how do i reset the game?
+				}
+
 				
 
 // end if/else for correct guess
@@ -108,6 +117,7 @@ function checkWord(x) {
 //check to see if there is a win or a loss
 //a win occurs when there are no more letters to guess (no more underscores)
 //a lose happens when the user has run out of guesses
+//(this is included in checkWord)
 
 
 
