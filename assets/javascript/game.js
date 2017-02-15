@@ -14,6 +14,8 @@
 // choose another word at random for the player to guess
 
 
+
+
 //make word options by making a set of arrays w/each word as [w,o,r,d]
 //then make array full of those arrays, select item at random?
 
@@ -23,6 +25,7 @@ var charmander = ['c', 'h', 'a', 'r', 'm', 'a', 'n', 'd', 'e', 'r'];
 var squirtle = ['s', 'q', 'u', 'i', 'r', 't', 'l', 'e'];
 
 var words = [pikachu, bulbasaur, charmander, squirtle];
+
 
 var wordToGuess = words[Math.floor(Math.random() * words.length)];
 
@@ -40,13 +43,13 @@ for (i = 0; i < wordToGuess.length; i++) {
 
 document.write('<p id="wordDisplay">'+ wordDisplay +'</p>');
 
-
+//create function for finding new word
 
 var guessesLeft = 12;
 
+
 //display the number of remaining guesses
 document.write('<p id="guessesLeft">'+ guessesLeft +'</p>');
-
 
 
 //to collect the  incorrect letters guessed by the user
@@ -54,6 +57,30 @@ var guessedLetters = [];
 
 //display guessed letters
 document.write('<p id="guessedLetters"> Guessed letters: '+ guessedLetters +'</p>');
+
+
+//NTS: don't repeat yourself -- how do i get this to run on load?
+function resetGame () {
+
+	wordToGuess = words[Math.floor(Math.random() * words.length)];
+	console.log(wordToGuess);
+
+	wordDisplay = [];
+
+	for (i = 0; i < wordToGuess.length; i++) {
+		(wordDisplay).push('_ ');
+	}
+
+	document.getElementById("wordDisplay").innerHTML = wordDisplay;
+
+	guessesLeft = 12;
+	document.getElementById("guessesLeft").innerHTML = guessesLeft;
+
+	guessedLetters = [];
+	document.getElementById("guessedLetters").innerHTML = guessedLetters;
+
+ //end resetGame
+ }
 
 
 //check to see if the guess matches any of the letters in the word.
@@ -84,6 +111,7 @@ function checkWord(x) {
 			console.log("you've got more to guess");
 		} else {
 			console.log("you won!");
+			resetGame();
 		}
 
 	//checks to see if the letter has already been guessed
@@ -103,6 +131,7 @@ function checkWord(x) {
 
 				if (guessesLeft === 0) {
 					console.log("you lost!");
+					resetGame();
 				// how do i reset the game?
 				}
 
@@ -113,6 +142,8 @@ function checkWord(x) {
 
 // end checkWord 
 }
+
+
 
 //check to see if there is a win or a loss
 //a win occurs when there are no more letters to guess (no more underscores)
