@@ -16,6 +16,7 @@
 
 
 
+
 //make word options by making a set of arrays w/each word as [w,o,r,d]
 //then make array full of those arrays, select item at random?
 
@@ -26,14 +27,17 @@ var squirtle = ['s', 'q', 'u', 'i', 'r', 't', 'l', 'e'];
 
 var words = [pikachu, bulbasaur, charmander, squirtle];
 
-
 var wordToGuess = words[Math.floor(Math.random() * words.length)];
 
 console.log(wordToGuess);
 
-//display wordToGuess as dashes
+// display wordToGuess as dashes
 
-//NTS: how do I remove the commas?
+// NTS: how do I remove the commas?
+
+var winCount = 0;
+
+document.write('<p id="wins"> Wins: '+ winCount +'</p>');
 
 var wordDisplay = [];
 
@@ -59,13 +63,15 @@ var guessedLetters = [];
 document.write('<p id="guessedLetters"> Guessed letters: '+ guessedLetters +'</p>');
 
 
-//NTS: don't repeat yourself -- how do i get this to run on load?
+//NTS: don't repeat yourself -- how do i get something like this to run on load?
 function resetGame () {
+
+	document.getElementById("wins").innerHTML = 'Wins: '+ winCount;
 
 	wordToGuess = words[Math.floor(Math.random() * words.length)];
 	console.log(wordToGuess);
 
-	wordDisplay = [];
+	wordDisplay.length = 0;
 
 	for (i = 0; i < wordToGuess.length; i++) {
 		(wordDisplay).push('_ ');
@@ -76,28 +82,18 @@ function resetGame () {
 	guessesLeft = 12;
 	document.getElementById("guessesLeft").innerHTML = guessesLeft;
 
-	guessedLetters = [];
-	document.getElementById("guessedLetters").innerHTML = guessedLetters;
+	guessedLetters.length = 0;
+	document.getElementById("guessedLetters").innerHTML = 'Guesssed Letters: ' + guessedLetters;
 
  //end resetGame
  }
 
-
 //check to see if the guess matches any of the letters in the word.
 //start checkWord
 function checkWord(x) {
-	for (i = 0; i < wordToGuess.length; i++) {
-		if (x === wordToGuess[i]) {
-			var correctGuess = true;
-			break;
-		} else {
-			 correctGuess = false;
-		}
-	//end for loop to check for matches	-- maybe try includes()?
-	}
 
 	//if there is a match, replace the dashes in the word with the guess. 
-	if (correctGuess) {
+	if (wordToGuess.includes(x)) {
 
 		for (i = 0; i < wordToGuess.length; i++) {
 			if (x === wordToGuess[i]) {
@@ -105,24 +101,31 @@ function checkWord(x) {
 				document.getElementById("wordDisplay").innerHTML = wordDisplay;
 			}
 		}	
-		//check to see if there is a win
 
+		//then check to see if there is a win
 		if (wordDisplay.includes("_ ")) {
 			console.log("you've got more to guess");
 		} else {
-			console.log("you won!");
+			winCount = winCount + 1;
+
+			console.log("you won this many times:" + winCount);
+			document.getElementById("wins").innerHTML = 'Wins: '+ winCount;
+
+			alert("you won!");
+			
 			resetGame();
 		}
 
-	//checks to see if the letter has already been guessed
+	//if it is not a correct guess, then check to see if the letter has already been guessed
 	} else  if (guessedLetters.includes(x)){
 
-		console.log("you already guessed " + x );
+				console.log("you already guessed " + x );
+
 	// if it is a new incorrect guess, decrease the guess count and add the letter to the guess list
 	} else {
 				guessesLeft = guessesLeft - 1;
-				document.getElementById("guessesLeft").innerHTML = guessesLeft;
 
+				document.getElementById("guessesLeft").innerHTML = guessesLeft;
 
 				guessedLetters.push(x);
 
@@ -130,37 +133,21 @@ function checkWord(x) {
 				console.log("You incorrectly guessed " + x);
 
 				if (guessesLeft === 0) {
-					console.log("you lost!");
+					alert("you lost!");
 					resetGame();
-				// how do i reset the game?
 				}
-
-				
 
 // end if/else for correct guess
 	}
 
-// end checkWord 
+// end checkWord
 }
-
-
-
-//check to see if there is a win or a loss
-//a win occurs when there are no more letters to guess (no more underscores)
-//a lose happens when the user has run out of guesses
-//(this is included in checkWord)
-
-
 
 //capture user input
  document.onkeyup = function(event) {
+
  	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
  	console.log(userGuess);
  	checkWord(userGuess);
 }
-
-
-
- //NTS: when solving the puzzle, have the letters disply in a array,
-
- //solving the thing will mean not having any more dashes
