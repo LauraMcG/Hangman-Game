@@ -13,10 +13,6 @@
 // when the player wins (all letters are guessed)
 // choose another word at random for the player to guess
 
-
-
-
-
 //make word options by making a set of arrays w/each word as [w,o,r,d]
 //then make array full of those arrays, select item at random?
 
@@ -24,8 +20,14 @@ var pikachu = ['p', 'i', 'k', 'a', 'c', 'h', 'u'];
 var bulbasaur = ['b', 'u', 'l', 'b', 'a', 's', 'a', 'u', 'r'];
 var charmander = ['c', 'h', 'a', 'r', 'm', 'a', 'n', 'd', 'e', 'r'];
 var squirtle = ['s', 'q', 'u', 'i', 'r', 't', 'l', 'e'];
+var eevee = ['e', 'e', 'v', 'e', 'e'];
+var mewtwo = ['m', 'e', 'w', 't', 'w', 'o'];
+var pidgey = ['p', 'i', 'd', 'g', 'e', 'y'];
+var weedle = ['w', 'e', 'e', 'd', 'l', 'e'];
+var ditto = ['d', 'i', 't', 't', 'o'];
+var clefairy = ['c', 'l', 'e', 'f', 'a', 'i', 'r', 'y'];
 
-var words = [pikachu, bulbasaur, charmander, squirtle];
+var words = [pikachu, bulbasaur, charmander, squirtle, eevee, mewtwo, pidgey, weedle, ditto, clefairy];
 
 var wordToGuess = words[Math.floor(Math.random() * words.length)];
 
